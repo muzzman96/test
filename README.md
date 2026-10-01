@@ -215,9 +215,39 @@ ls ~/.cache/ms-playwright/                   # should list a chromium-<build> di
 ```json
 {
   "mcpServers": {
+    "cybermes": {
+      "command": "/home/<user>/.local/bin/cybermes-mcp",
+      "args": [],
+      "env": {
+        "CYBERMES_DIR": "/home/<user>/.cybermes/data"
+      }
+    },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"]
+      "args": [
+        "@playwright/mcp@latest",
+        "--config",
+        "/home/<user>/burp-playwright.json"
+      ]
+    }
+  },
+[...rest of config...]
+}
+```
+
+**Finally, configure `/home/<user>/burp-playwright.json` (where `server` is your running burp instance):**
+
+```json
+{
+  "browser": {
+    "browserName": "chromium",
+    "launchOptions": {
+      "proxy": {
+        "server": "http://127.0.0.1:8085"
+      }
+    },
+    "contextOptions": {
+      "ignoreHTTPSErrors": true
     }
   }
 }
